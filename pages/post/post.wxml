@@ -1,0 +1,31 @@
+<!--pages/post/post.wxml-->
+<view>
+  <swiper indicator-dots="true" autoplay="true" interval="3000" circular="ture">
+    <swiper-item>
+      <image src="/images/post/post-1@text.jpg"/>
+    </swiper-item>
+    <swiper-item>
+      <image src="/images/post/post-2@text.jpg"/>
+    </swiper-item>
+    <swiper-item>
+      <image src="/images/post/post-3@text.jpg"/>
+    </swiper-item>
+  </swiper>
+</view>
+<view class="post-container">
+  <view class="post-author-date">
+    <image src="/images/avatar/avatar-5.png"/>
+    <text>October 29 2019</text>
+  </view>
+  <text class="post-title">小时候的冰棍和雪糕</text>
+  <image class="post-image" src="/images/post/post-4.jpg"/>
+  <text class="post-content">冰棍和雪糕绝对不是同一个东西,冰棒： 有木棒支撑的，大多是纯冰里含点果汁，吮吸后便会失去甜味和口味，剩下白冰，较为廉价;雪糕：大多是碗装的，里面是黏体，需要汤勺取出，才你食用。</text>
+  <view class="post-like">
+    <image src="/images/icon/wx_app_collect.png"/>
+    <text>108</text>
+    <image src="/images/icon/wx_app_view.png"/>
+    <text>92</text>
+    <image src="/images/icon/wx_app_message.png"/>
+    <text>7</text>
+  </view>
+</view>

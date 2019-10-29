@@ -1,6 +1,7 @@
 {
   "note":["微信小程序全局配置，包括网络请求超时、一些窗口的表现、各个页面的注册路径"],
   "pages": [
+    "pages/post/post",
     "pages/start/welcome",
     "pages/logs/logs"
   ],
