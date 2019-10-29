@@ -1,0 +1,8 @@
+<!-- view通常作为容器使用 -->
+<view class="container">
+  <image class="avatar" src="../../images/avatar/avatar-1.png"></image>
+  <text class="motto">Hello, 蓝领</text>
+  <view class="journey-container">
+    <text class="journey">准备起航</text>
+  </view>
+</view>

@@ -1,0 +1,4 @@
+/**app.wxss 微信小程序全局样式**/
+text{
+  font-family: Microsoft YaHei;
+}
