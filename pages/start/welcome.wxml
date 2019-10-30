@@ -2,7 +2,19 @@
 <view class="container">
   <image class="avatar" src="../../images/avatar/avatar-1.png"></image>
   <text class="motto">Hello, 蓝领</text>
+  <!-- 常见的冒泡事件：
+  touchstart  //手指触摸动作开始
+  touchmove   //手指触摸后移动
+  touchcanncel  //手指触摸动作被打断,如：来电、弹窗
+  touchend    //手指触摸动作结束
+  tap         //手指触摸后马上离开
+  longtap     //手指触摸后，超过350ms再离开
+
+  注释：wxml组件注册事件时，不可以直接使用tap="function"或者touchstart="function"，需要在事件名前加：catc或者bind前缀。比如下面的catchtap。
+    catch 将阻止事件向父节点传播，而bind不会阻止事件的传播。-->
   <view catchtap="onStartPost" class="journey-container">
     <text class="journey">准备起航</text>
   </view>
 </view>
+<!-- 非冒泡事件
+  除上面6中事件外，如无特殊申明都是非冒泡事件，大多不是通用事件，而是某些组件特有的事件。如<form/>的submit事件，<input/>的input事件，<scroll-view/>的scroll事件等-->
