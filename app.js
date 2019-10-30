@@ -1,6 +1,8 @@
 //app.js 注册微信小程序应用
 App({
-  onLaunch: function () {
+  //小程序初始化完成时触发onLaunch
+  onLaunch: function (options) {
+    console.log("App onLaunch! opt is :", options)
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -33,6 +35,22 @@ App({
       }
     })
   },
+
+  //当小程序启动，或从后台进入前台显示，会触发onShadow
+  onShow: function (options) {
+    console.log("App onShow!")
+  },
+
+  //当小程序从前台进入后台，会触发onHide
+  onHide:function(){
+    console.log("App onHide!")
+  },
+
+  //当小程序发生脚本错误，后者API调用失败时，会触发onError并带上错误信息
+  onError:function(errMsg){
+    console.log("App onError!,error msg is:", errMsg)
+  },
+
   globalData: {
     userInfo: null
   }
