@@ -37,7 +37,7 @@ swiper image{
 
 .post-image{
   width: 100%;
-  height: 590rpx;
+  height: 340rpx;
   margin-bottom: 15px;
 }
 
