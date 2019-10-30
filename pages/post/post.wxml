@@ -1,4 +1,9 @@
-<!--pages/post/post.wxml-->
+<!-- include与import引用模板的区别
+1、import需要先引入template，然后在使用template；但include不需要预先引入，直接在需要的地方引入模板即可。
+2、include就是简单的代码替换，不存在作用域，也不能像import一样使用data传递变量。
+3、include无法引入包含template标签的代码-->
+<import src="post-item/item-tpl.wxml"/>
+
 <view>
   <swiper indicator-dots="true" autoplay="true" interval="3000" circular="ture">
     <swiper-item>
@@ -11,24 +16,10 @@
       <image src="/images/post/post-3@text.jpg"/>
     </swiper-item>
   </swiper>
+
+  <!-- 这里需要注意template默认接收的外部变量名就是item，不要改-->
   <block wx:for="{{postList}}" wx:key="key" wx:for-item="item" wx:for-index="index">
-    <view class="post-container">
-      <view class="post-author-date">
-        <image src="{{postData.avatar}}"/>
-        <text>{{postData.object.date}}</text>
-      </view>
-      <text class="post-title">{{item.title}}</text>
-      <!-- scaleToFill(默认)、aspectFit、aspectFill、widthFix-->
-      <image class="post-image" src="{{item.postImg}}" mode="widthFix"/>
-      <text class="post-content">{{item.content}}</text>
-      <view class="post-like">
-        <image src="/images/icon/wx_app_collect.png"/>
-        <text>{{item.collectionNum.array[0]}}</text>
-        <image src="/images/icon/wx_app_view.png"/>
-        <text>{{item.readingNum}}</text>
-        <image src="/images/icon/wx_app_message.png"/>
-        <text>{{item.commentNum}}</text>
-      </view>
-    </view>
+    <template is="postItemTpl" data="{{item}}"/>
+    <!--<include src="post-item/item-tpl.wxml"/>-->
   </block>
 </view>
