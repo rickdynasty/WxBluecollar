@@ -1,6 +1,5 @@
 // pages/post/detail/detail.js
 import { DBPost } from '../../../data/DBPost.js';
-var app = getApp();
 
 Page({
 
@@ -15,9 +14,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // 注意这里的id变量是post.js启动detail页面的时候指定的
     var postId = options.id;
-    this.dbPost = new DBPost(postId);
-    this.postData = this.dbPost.getPostItemById().data;
+    this.dbPost = new DBPost();
+    this.postData = this.dbPost.getPostItemById(postId).data;
     this.setData({
       post: this.postData
     })
@@ -27,7 +27,10 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    console.log("post Detail onReady!")
+    console.log("post Detail onReady!");
+    wx.setNavigationBarTitle({
+      title: this.postData.title,
+    });
   },
 
   /**

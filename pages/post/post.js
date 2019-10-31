@@ -40,6 +40,9 @@ Page({
    */
   onReady: function () {
     console.log("post page is onReady")
+    wx.setNavigationBarTitle({
+      title: '文章列表',
+    })
   },
 
   /**

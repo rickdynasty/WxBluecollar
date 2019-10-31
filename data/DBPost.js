@@ -1,15 +1,14 @@
 class DBPost{
-  constructor(postId) {
+  constructor() {
     this.storageKeyName = 'postList';
-    this.postId = postId;
   }
 
   //获取指定id号的文章数据
-  getPostItemById() {
+  getPostItemById(id) {
     var postsData = this.getAllPostData();
     var len = postsData.length;
     for (var i = 0; i < len; i++) {
-      if (postsData[i].postId == this.postId) {
+      if (postsData[i].postId == id) {
         return {
           index: i,
           data: postsData[i]
@@ -26,11 +25,6 @@ class DBPost{
       this.initPostList(res);
     }
     return res;
-  }
-
-  /*初始化缓存数据*/
-  execSetStorageSync(data) {
-    wx.setStorageSync(this.storageKeyName, data);
   }
 
   //本地缓存，保存/更新
