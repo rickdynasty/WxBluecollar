@@ -42,6 +42,13 @@ Page({
     })
   },
 
+  onCommentTap:function(event){
+      var id = event.currentTarget.dataset.postId;
+      wx.navigateTo({
+        url: '../comment/comment?id='+id
+      })
+  },
+
   onUpTap: function (event) {
     //dbPost对象已经在onLoad函数里被保存到了this变量中，无须再次实例化
     var newData = this.dbPost.up(this.postId);

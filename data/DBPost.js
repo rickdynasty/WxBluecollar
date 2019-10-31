@@ -1,6 +1,23 @@
+var util = require('../util/util.js')
+
 class DBPost{
   constructor() {
     this.storageKeyName = 'postList';
+  }
+
+  /*得到全部文章信息*/
+  getAllPostData() {
+    var res = wx.getStorageSync(this.storageKeyName);
+    if (!res) {
+      res = require('../data/defaultdata.js').postList;
+      this.execSetStorageSync(res);
+    }
+    return res;
+  }
+
+  //本地缓存，保存/更新
+  execSetStorageSync(data) {
+    wx.setStorageSync(this.storageKeyName, data)
   }
 
   //获取指定id号的文章数据
@@ -18,19 +35,20 @@ class DBPost{
     }
   }
 
-  /*得到全部文章信息*/
-  getAllPostData() {
-    var res = wx.getStorageSync(this.storageKeyName);
-    if (!res) {
-      res = require('../data/defaultdata.js').postList;
-      this.execSetStorageSync(res);
-    }
-    return res;
-  }
+  getCommentData(id){
+    var itemData = getPostItemById(id).data;
 
-  //本地缓存，保存/更新
-  execSetStorageSync(data) {
-    wx.setStorageSync(this.storageKeyName, data)
+    //将评论按时间降序排列
+    itemData.comments.sort(this.compareWithTime);
+    var len = itemData.comments.length, comment;
+
+    for(var i=0; i< len;i++){
+      //将comment中的时间戳转换成可阅读的格式
+      comment=itemData.comments[i];
+      comment.create_time = util.getDiffTime(comment.create_time,true);
+    }
+
+    return itemData.comments;
   }
   
   //收藏文章
@@ -78,6 +96,17 @@ class DBPost{
     this.execSetStorageSync(allPostData);
 
     return postData;
+  }
+
+  compareWithTime(val1, val2){
+    var flag = parseFloat(val1.create_time)-parseFloat(val2.create_time);
+    if( flag < 0){
+      return 1;
+    } else if (0 < flag){
+      return -1;
+    } else {
+      return 0;
+    }
   }
 };
 
