@@ -17,9 +17,10 @@
     </swiper-item>
   </swiper>
 
-  <!-- 这里需要注意template默认接收的外部变量名就是item，不要改-->
+  <!-- 注意：template里面数据绑定的变量名默认就是item -->
+  <!-- <template is="postItemTpl" data="{{...item}}"> ,这里data="{{...item}}"的作用就是消除template对外部变量名的依赖，这样template里面对item内容的引用就可以把“item.”去掉-->
   <block wx:for="{{postList}}" wx:key="key" wx:for-item="item" wx:for-index="index">
-    <template is="postItemTpl" data="{{item}}"/>
+    <template is="postItemTpl" data="{{...item}}"/>
     <!--<include src="post-item/item-tpl.wxml"/>-->
   </block>
 </view>

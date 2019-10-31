@@ -26,6 +26,15 @@ Page({
       })
   },
 
+  onTapToDetail(event){
+    var postId = event.currentTarget.dataset.postId;
+    console.log("onTapToDetail postId is "+postId);
+
+    wx.navigateTo({
+      url: 'detail/detail?id='+postId,
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

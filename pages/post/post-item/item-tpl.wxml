@@ -1,22 +1,25 @@
-<!-- <template name="postItemTpl" data="{{...item}}"> ,这里data="{{...item}}"的作用就是消除template对外部变量名的依赖，这样下面的“item.”都可以去掉
-注意：template里面数据绑定的变量名默认就是item，而且还不好改。这样就造成外面的变量名就得是item-->
 <template name="postItemTpl">
-    <view class="post-container">
+  <!-- 注意这里事件的参数传递规则：
+    1、必须以"data-"开头
+    2、多个单词直接用"-"连接
+    3、单词直接最好不要用大写字母，如果有大写字母，除单词第一个字母外，其余大写字母都将被转成小写
+    4、在js中获取自定义属性值时，多个单词将被转换成驼峰命名，除第一个词外的后面单词的首字母大写，eg:data-post-id、data-pOST-ID在dataset中的变量名postId，data-postID在dataset中的变量名是postid -->
+  <view catchtap="onTapToDetail" data-post-id="{{postId}}" class="post-container">
       <view class="post-author-date">
         <image src="{{postData.avatar}}"/>
         <text>{{postData.object.date}}</text>
       </view>
-      <text class="post-title">{{item.title}}</text>
+      <text class="post-title">{{title}}</text>
       <!-- scaleToFill(默认)、aspectFit、aspectFill、widthFix-->
-      <image class="post-image" src="{{item.postImg}}" mode="widthFix"/>
-      <text class="post-content">{{item.content}}</text>
+      <image class="post-image" src="{{postImg}}" mode="widthFix"/>
+      <text class="post-content">{{content}}</text>
       <view class="post-like">
         <image src="/images/icon/wx_app_collect.png"/>
-        <text>{{item.collectionNum}}</text>
+        <text>{{collectionNum}}</text>
         <image src="/images/icon/wx_app_view.png"/>
-        <text>{{item.readingNum}}</text>
+        <text>{{readingNum}}</text>
         <image src="/images/icon/wx_app_message.png"/>
-        <text>{{item.commentNum}}</text>
+        <text>{{commentNum}}</text>
       </view>
     </view>
 </template>
