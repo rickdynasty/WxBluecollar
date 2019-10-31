@@ -18,12 +18,11 @@ Page({
     this.postId = options.id;
     this.dbPost = new DBPost();
     var comments = this.dbPost.getCommentData(this.postId);
-
+    // 绑定评论数据
     this.setData({
       comments: comments
     });
     console.log(comments);
-    
   },
 
   /**

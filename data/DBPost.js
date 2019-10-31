@@ -36,7 +36,7 @@ class DBPost{
   }
 
   getCommentData(id){
-    var itemData = getPostItemById(id).data;
+    var itemData = this.getPostItemById(id).data;
 
     //将评论按时间降序排列
     itemData.comments.sort(this.compareWithTime);
