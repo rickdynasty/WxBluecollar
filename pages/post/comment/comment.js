@@ -7,7 +7,16 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //控制：键盘输入 | 语音输入，初始为键盘输入
     useKeyboardFlag:true,
+    //控制：输入框内容，初始为空
+    keyboardInputValue:'',
+    //控制：显示图片选择面板，初始为不显示
+    sendMoreMsgFlag:false,
+    //选择的照片
+    chooseFiles:[],
+    //删除的图片索引
+    deleteIndex: -1,
   },
 
   /**
@@ -92,11 +101,56 @@ Page({
     })
   },
 
+  deleteImage:function(event){
+    var index = event.currentTarget.dataset.idx,
+    that = this;
+    this.setData({
+      deleteIndex:index
+    });
+    this.data.chooseFiles.splice(index,1);
+    setTimeout(function(){
+      that.setData({
+        deleteIndex:-1,
+        chooseFiles: that.data.chooseFiles
+      });
+    },500)
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
 
+  },
+
+  //控制显示选择照片、拍照等按钮
+  sendMoreMsg:function(event){
+    this.setData({
+      sendMoreMsgFlag:!this.data.sendMoreMsgFlag,
+    })
+  },
+
+  chooseImage:function(event){
+    // 已选择图片数组
+    var imgArr = this.data.chooseFiles;
+    //当前定一个规则：最多能选择3张
+    var leftCount = 3 - imgArr.length;
+    if (leftCount <= 0) {
+      return;
+    }
+    var sourceType = [event.currentTarget.dataset.category],
+      that = this;
+
+    wx.chooseImage({
+      count: leftCount, //max 照片选择数量
+      sourceType: sourceType,  //选择拍照生成照片还是从相册里选择照片，这个值是一个数组，可以有这3个值：['album'],['camera'],['album','camera']
+      success: function (res) {  //wx.chooseImage操作成功回调，res的tempFilePaths属性保存了操作成功返回的照片RUL
+        console.log(res),
+        that.setData({
+          chooseFiles: imgArr.concat(res.tempFilePaths)
+        });
+      },
+    })
   },
 
   /**

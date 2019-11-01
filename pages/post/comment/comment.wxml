@@ -40,10 +40,40 @@
       </view>
       <view class="input-item" hidden="{{!useKeyboardFlag}}">
         <image class="comment-icon speak-icon" src="/images/icon/wx_app_speak.png" catchtap="switchInputType"></image>
-        <input class="input keyboard-input" value="{{keyboardInputValue}}" bindinput="bindCommentInput" placeholder="说点什么吧……"/>
+        <input class="input keyboard-input" value="{{keyboardInputValue}}" bindinput="bindCommentInput" bindconfirm="submitComment" placeholder="说点什么吧……"/>
       </view>
       <image class="comment-icon add-icon" src="/images/icon/wx_app_add.png" catchtap="sendMoreMsg"></image>
       <view class="submit-btn" catchtap="submitComment">发送</view>
-    </view>  
+    </view>
+    <view class="send-more-box" hidden="{{!sendMoreMsgFlag}}">
+      <!-- 选择图片或拍照 -->
+      <view class="send-more-btns-main">
+        <view class="more-btn-item" catchtap="chooseImage" data-category="album">
+          <view class="more-btn-main">
+            <image src="/images/icon/wx_app_upload_image.png"></image>
+          </view>
+          <text>照片</text>
+        </view>
+        <view class="more-btn-item" catchtap="chooseImage" data-category="camera">
+          <view class="more-btn-main">
+            <image src="/images/icon/wx_app_camera.png"></image>
+          </view>
+          <text>拍照</text>
+        </view>
+      </view>
+
+      <!-- 显示选择的照片 -->
+      <view class="send-more-result-main" hidden="{{chooseFiles.length == 0}}">
+        <block wx:for="{{chooseFiles}}" wx:key="key" wx:for-item="file" wx:for-index="idx">
+          <!-- 删除一个就添加delete样式 -->
+          <view class="file-box {{deleteIndex==idx?'deleting':''}}">
+            <view class="img-box">
+              <image src="{{item}}" mode="aspectFill"></image>
+              <icon class="remove-icon" type="cancel" size="23" color="#B2B2B2" catchtap="deleteImage" data-idx="{{idx}}"></icon>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
   </view>
 </view>
