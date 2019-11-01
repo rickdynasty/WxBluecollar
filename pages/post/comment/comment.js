@@ -17,12 +17,11 @@ Page({
     // 注意这里的id变量是post.js启动detail页面的时候指定的
     this.postId = options.id;
     this.dbPost = new DBPost();
-    var comments = this.dbPost.getCommentData(this.postId);
+    var comts = this.dbPost.getCommentData(this.postId);
     // 绑定评论数据
     this.setData({
-      comments: comments
+      comments: comts
     });
-    console.log(comments);
   },
 
   //预览图片
@@ -44,6 +43,52 @@ Page({
   switchInputType: function (event) {
     this.setData({
       useKeyboardFlag: !this.data.useKeyboardFlag
+    })
+  },
+
+  //获取用户输入
+  bindCommentInput:function(event){
+    //保存输入内容
+    this.data.keyboardInputValue = event.detail.value;
+  },
+
+  submitComment:function(event){
+    //如果没有输入内容，就不执行任何操作
+    if (!this.data.keyboardInputValue) {
+      wx.showToast({
+        title: '请输入评论内容',
+        duration:800,
+        icon:'none'
+      })
+      return;
+    }
+
+    //构建一条评论：注意这里出评论内容其他都是硬编码方式
+    var newComment = {
+      username: "成领",
+      avatar: "/images/avatar/avatar-6.png",
+      create_time: new Date().getTime() / 1000,   //评论时间
+      //评论内容
+      content:{
+        txt: this.data.keyboardInputValue,
+      }
+    };
+    console.log("create_time is " + newComment.create_time);
+
+    //保存评论到数据库中,同时返回当前postData[评论只是post里面的一个属性]
+    this.dbPost.newComment(this.postId, newComment);
+    //显示结果
+    wx.showToast({
+      title: '评论成功',
+      duration:1000,
+      icon:"success",
+    })
+
+    //从数据库中获取最新的评论内容，重新绑定数据刷新界面，同时充值输入状态
+    var commts = this.dbPost.getCommentData(this.postId);
+    this.setData({
+      comments: commts,
+      keyboardInputValue: '',
     })
   },
 

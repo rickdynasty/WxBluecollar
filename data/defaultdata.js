@@ -1,5 +1,5 @@
 var postList = [{
-  date: "Jan 28 2017",
+  date: "Jan 28 2019",
   title: "小时候的冰棍儿与雪糕",
   postImg: "/images/post/post-4.jpg",
   avatar: "/images/avatar/avatar-5.png",
@@ -22,7 +22,7 @@ var postList = [{
   comments: []
 },
 {
-  date: "Jan 9 2017",
+  date: "Jan 9 2019",
   title: "从童年呼啸而过的火车",
   postImg: "/images/post/post-5.jpg",
   avatar: "/images/avatar/avatar-1.png",
@@ -46,7 +46,7 @@ var postList = [{
     {
       username: '青石',
       avatar: '/images/avatar/avatar-3.png',
-      create_time: '1484723344',
+      create_time: '1572591344',
       content: {
         txt: ' 那一年的毕业季，我们挥挥手，来不及说再见，就踏上了远行的火车。',
         img: ["/images/comment/train-1.jpg", "/images/comment/train-2.jpg", "/images/comment/train-3.jpg"],
@@ -55,7 +55,7 @@ var postList = [{
     }, {
       username: '水清',
       avatar: '/images/avatar/avatar-2.png',
-      create_time: '1481018319',
+      create_time: '1571591319',
       content: {
         txt: '夏日的蝉鸣与夜晚的火车，时长会在未来无数的日子里不断的在我耳边响起，难以忘怀',
         img: [],
@@ -65,7 +65,7 @@ var postList = [{
     {
       username: '赤墨',
       avatar: '/images/avatar/avatar-1.png',
-      create_time: '1484496000',
+      create_time: '1570591000',
       content: {
         txt: '时光的湮染，自然的吞噬，让太多的老火车站也消失得无影无踪',
         img: ["/images/comment/train-4.jpg",],
@@ -75,7 +75,7 @@ var postList = [{
     {
       username: '林白',
       avatar: '/images/avatar/avatar-4.png',
-      create_time: '1484582400',
+      create_time: '1562582400',
       content: {
         txt: '',
         img: [],
@@ -85,7 +85,7 @@ var postList = [{
   ]
 },
 {
-  date: "Jan 29 2017",
+  date: "Jan 29 2019",
   title: "记忆里的春节",
   postImg: "/images/post/post-1.jpg",
   avatar: "/images/avatar/avatar-3.png",
@@ -108,7 +108,7 @@ var postList = [{
   comments: []
 },
 {
-  date: "Sep 22 2016",
+  date: "Sep 22 2019",
   title: "换个角度，再来看看微信小程序的开发与发展",
   postImg: "/images/post/post-2.jpg",
   avatar: "/images/avatar/avatar-2.png",

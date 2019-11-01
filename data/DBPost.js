@@ -61,9 +61,15 @@ class DBPost{
     return this.updatePostData(id, 'up');
   }
 
+  newComment(id, newComment){
+    return this.updatePostData(id, 'comment', newComment);
+  }
+
   //更新本地的点赞、评论信息、收藏、阅读量
-  updatePostData(id, category){
+  updatePostData(id, category, newComment){
+    console.log("call updatePostData("+id+", "+category+", "+newComment+")");
     var itemData = this.getPostItemById(id), postData = itemData.data, allPostData = this.getAllPostData();
+    console.log("itemData:" + itemData + " postData:" + postData + " allPostData:" + allPostData);
 
     switch (category){
       case 'collect':
@@ -86,6 +92,10 @@ class DBPost{
           postData.upNum--;
           postData.upStatus = false;
         }
+        break;
+      case 'comment':
+        postData.comments.push(newComment);
+        postData.commentNum++;
         break;
       default:
         break;
