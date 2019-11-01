@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    useKeyboardFlag:true,
   },
 
   /**
@@ -23,6 +23,28 @@ Page({
       comments: comments
     });
     console.log(comments);
+  },
+
+  //预览图片
+  previewImg: function (event) {
+    //获取评论索引
+    var commentIdx = event.currentTarget.dataset.commentIdx,
+      //获取图片索引
+      imgIdx = event.currentTarget.dataset.imgIdx,
+      //获取评论图片
+      imgs = this.data.comments[commentIdx].content.img;
+
+    wx.previewImage({
+      // urls: imgs, // 注意：这里需要填写预览的图片http链接列表，这个api不能显示本地的
+      urls: ['http://img.redocn.com/sheying/20150915/lvpihuochechexiang_4962316_small.jpg', ],
+      current: imgs[imgIdx], // 当前显示图片的http链接
+    })
+  },
+
+  switchInputType: function (event) {
+    this.setData({
+      useKeyboardFlag: !this.data.useKeyboardFlag
+    })
   },
 
   /**
