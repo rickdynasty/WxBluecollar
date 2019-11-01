@@ -32,6 +32,7 @@
       </view>
     </block>
   </view>
+
   <view class="input-box">
     <view class="send-msg-box">
       <view class="input-item" hidden="{{useKeyboardFlag}}">
@@ -45,8 +46,9 @@
       <image class="comment-icon add-icon" src="/images/icon/wx_app_add.png" catchtap="sendMoreMsg"></image>
       <view class="submit-btn" catchtap="submitComment">发送</view>
     </view>
-    <view class="send-more-box" hidden="{{!sendMoreMsgFlag}}">
-      <!-- 选择图片或拍照 -->
+
+     <view class="send-more-box" hidden="{{!sendMoreMsgFlag}}">
+      <!--选择图片和拍照的按钮-->
       <view class="send-more-btns-main">
         <view class="more-btn-item" catchtap="chooseImage" data-category="album">
           <view class="more-btn-main">
@@ -62,14 +64,14 @@
         </view>
       </view>
 
-      <!-- 显示选择的照片 -->
-      <view class="send-more-result-main" hidden="{{chooseFiles.length == 0}}">
-        <block wx:for="{{chooseFiles}}" wx:key="key" wx:for-item="file" wx:for-index="idx">
-          <!-- 删除一个就添加delete样式 -->
+      <!--显示选择的图片-->
+      <view class="send-more-result-main" hidden="{{chooseFiles.length==0}}">
+        <block wx:for="{{chooseFiles}}" wx:for-index="idx">
+          <!--如果删除其中一个，则对其添加deleting 样式；-->
           <view class="file-box {{deleteIndex==idx?'deleting':''}}">
             <view class="img-box">
               <image src="{{item}}" mode="aspectFill"></image>
-              <icon class="remove-icon" type="cancel" size="23" color="#B2B2B2" catchtap="deleteImage" data-idx="{{idx}}"></icon>
+              <icon class="remove-icon" type="cancel" size="23" color="#B2B2B2" catchtap="deleteImage" data-idx="{{idx}}" />
             </view>
           </view>
         </block>

@@ -8,13 +8,13 @@ Page({
    */
   data: {
     //控制：键盘输入 | 语音输入，初始为键盘输入
-    useKeyboardFlag:true,
+    useKeyboardFlag: true,
     //控制：输入框内容，初始为空
-    keyboardInputValue:'',
+    keyboardInputValue: '',
     //控制：显示图片选择面板，初始为不显示
-    sendMoreMsgFlag:false,
+    sendMoreMsgFlag: false,
     //选择的照片
-    chooseFiles:[],
+    chooseFiles: [],
     //删除的图片索引
     deleteIndex: -1,
   },
@@ -26,44 +26,45 @@ Page({
     // 注意这里的id变量是post.js启动detail页面的时候指定的
     this.postId = options.id;
     this.dbPost = new DBPost();
-    var comts = this.dbPost.getCommentData(this.postId);
+    var comments = this.dbPost.getCommentData(this.postId);
     // 绑定评论数据
     this.setData({
-      comments: comts
+      comments: comments
     });
   },
 
   //预览图片
   previewImg: function (event) {
-    //获取评论索引
+    //获取评论序号
     var commentIdx = event.currentTarget.dataset.commentIdx,
-      //获取图片索引
+      //获取图片在图片数组中的序号
       imgIdx = event.currentTarget.dataset.imgIdx,
-      //获取评论图片
+      //获取评论的全部图片
       imgs = this.data.comments[commentIdx].content.img;
-
     wx.previewImage({
-      // urls: imgs, // 注意：这里需要填写预览的图片http链接列表，这个api不能显示本地的
-      urls: ['http://img.redocn.com/sheying/20150915/lvpihuochechexiang_4962316_small.jpg', ],
       current: imgs[imgIdx], // 当前显示图片的http链接
+      urls: imgs // 需要预览的图片http链接列表
     })
   },
 
+  //切换语音和键盘输入
   switchInputType: function (event) {
     this.setData({
       useKeyboardFlag: !this.data.useKeyboardFlag
     })
   },
 
-  //获取用户输入
-  bindCommentInput:function(event){
-    //保存输入内容
-    this.data.keyboardInputValue = event.detail.value;
+  // 获取用户输入
+  bindCommentInput: function (event) {
+    var val = event.detail.value;
+    this.data.keyboardInputValue = val;
   },
 
-  submitComment:function(event){
+  submitComment: function (event) {
+    var imgs = this.data.chooseFiles;
+
     //如果没有输入内容，就不执行任何操作
-    if (!this.data.keyboardInputValue) {
+    if (!this.data.keyboardInputValue && imgs.length === 0) {
       wx.showToast({
         title: '请输入评论内容',
         duration:800,
@@ -82,7 +83,6 @@ Page({
         txt: this.data.keyboardInputValue,
       }
     };
-    console.log("create_time is " + newComment.create_time);
 
     //保存评论到数据库中,同时返回当前postData[评论只是post里面的一个属性]
     this.dbPost.newComment(this.postId, newComment);
@@ -94,104 +94,148 @@ Page({
     })
 
     //从数据库中获取最新的评论内容，重新绑定数据刷新界面，同时充值输入状态
-    var commts = this.dbPost.getCommentData(this.postId);
+    var comments = this.dbPost.getCommentData(this.postId);
+    // 绑定评论数据
     this.setData({
-      comments: commts,
+      comments: comments,
       keyboardInputValue: '',
-    })
-  },
-
-  deleteImage:function(event){
-    var index = event.currentTarget.dataset.idx,
-    that = this;
-    this.setData({
-      deleteIndex:index
+      chooseFiles: [],
+      sendMoreMsgFlag: false
     });
-    this.data.chooseFiles.splice(index,1);
-    setTimeout(function(){
-      that.setData({
-        deleteIndex:-1,
-        chooseFiles: that.data.chooseFiles
-      });
-    },500)
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  //控制显示选择照片、拍照等按钮
-  sendMoreMsg:function(event){
+  //显示 选择照片、拍照等按钮
+  sendMoreMsg: function () {
     this.setData({
-      sendMoreMsgFlag:!this.data.sendMoreMsgFlag,
+      sendMoreMsgFlag: !this.data.sendMoreMsgFlag
     })
   },
 
-  chooseImage:function(event){
+  //选择本地照片与拍照
+  chooseImage: function (event) {
     // 已选择图片数组
     var imgArr = this.data.chooseFiles;
-    //当前定一个规则：最多能选择3张
+    //只能上传3张照片，包括拍照
     var leftCount = 3 - imgArr.length;
     if (leftCount <= 0) {
       return;
     }
     var sourceType = [event.currentTarget.dataset.category],
       that = this;
-
+    console.log(leftCount)
     wx.chooseImage({
-      count: leftCount, //max 照片选择数量
-      sourceType: sourceType,  //选择拍照生成照片还是从相册里选择照片，这个值是一个数组，可以有这3个值：['album'],['camera'],['album','camera']
-      success: function (res) {  //wx.chooseImage操作成功回调，res的tempFilePaths属性保存了操作成功返回的照片RUL
-        console.log(res),
+      count: leftCount,
+      sourceType: sourceType,
+      success: function (res) {
         that.setData({
           chooseFiles: imgArr.concat(res.tempFilePaths)
         });
-      },
+      }
     })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  //删除已经选择的图片
+  deleteImage: function (event) {
+    var index = event.currentTarget.dataset.idx,
+      that = this;
+    that.setData({
+      deleteIndex: index
+    });
+    that.data.chooseFiles.splice(index, 1);
+    setTimeout(function () {
+      that.setData({
+        deleteIndex: -1,
+        chooseFiles: that.data.chooseFiles
+      });
+    }, 500)
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
+  //开始录音
+  recordStart: function () {
+    var that = this;
+    this.setData({
+      recodingClass: 'recoding'
+    });
+    this.startTime = new Date();
+    wx.startRecord({
+      success: function (res) {
+        console.log('success');
+        var diff = (that.endTime - that.startTime) / 1000;
+        diff = Math.ceil(diff);
 
+        //发送录音
+        that.submitVoiceComment({ url: res.tempFilePath, timeLen: diff });
+      },
+      fail: function (res) {
+        console.log('fail');
+        console.log(res);
+      },
+      complete: function (res) {
+        console.log('complete');
+        console.log(res);
+      }
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  //结束录音
+  recordEnd: function () {
+    this.setData({
+      recodingClass: ''
+    });
+    this.endTime = new Date();
+    wx.stopRecord();
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
+  //提交录音 
+  submitVoiceComment: function (audio) {
+    var newData = {
+      username: "青石",
+      avatar: "/images/avatar/avatar-3.png",
+      create_time: new Date().getTime() / 1000,
+      content: {
+        txt: '',
+        img: [],
+        audio: audio
+      },
+    };
 
+    //保存新评论到缓存数据库中
+    this.dbPost.newComment(newData);
+
+    //显示操作结果
+    this.showCommitSuccessToast();
+
+    //重新渲染并绑定所有评论
+    this.bindCommentData();
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
+  playAudio: function (event) {
+    var url = event.currentTarget.dataset.url,
+      that = this;
 
-  },
+    //暂停当前录音
+    if (url == this.data.currentAudio) {
+      wx.pauseVoice();
+      this.data.currentAudio = ''
+    }
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+    //播放录音
+    else {
+      this.data.currentAudio = url;
+      wx.playVoice({
+        filePath: url,
+        complete: function () {
+          //只有当录音播放完后才会执行
+          that.data.currentAudio = '';
+          console.log('complete')
+        },
+        success: function () {
+          console.log('success')
+        },
+        fail: function () {
+          console.log('fail')
+        }
+      });
+    }
   }
 })
