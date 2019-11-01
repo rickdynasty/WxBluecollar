@@ -149,7 +149,7 @@
     border-radius: 3px;
     line-height: 65rpx;
     margin:5rpx 0 5rpx 75rpx ;
-    font-size: 24rpx;
+    font-size: 32rpx;
     color: #838383;
     padding: 0 2%;
 }
@@ -187,7 +187,7 @@
     margin-top: 2px;
 }
 .input-box .submit-btn{
-    font-size: 24rpx;
+    font-size: 28rpx;
     margin-top: 5rpx;
     margin-right: 8rpx;
     line-height: 60rpx;

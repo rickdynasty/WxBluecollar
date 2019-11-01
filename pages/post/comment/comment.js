@@ -3,14 +3,22 @@ import { DBPost } from '../../../data/DBPost.js';
 
 Page({
   data: {
+    //控制：键盘输入 | 语音输入，初始为键盘输入
     useKeyboardFlag: true,
+    //控制：输入框内容，初始为空
     keyboardInputValue: '',
+    //控制：显示图片选择面板，初始为不显示
     sendMoreMsgFlag: false,
+    //选择的照片
     chooseFiles: [],
+    //删除的图片索引
     deleteIndex: -1,
+    //当前的录音记录
     currentAudio: ''
   },
+
   onLoad: function (options) {
+    // 注意这里的id变量是post.js启动detail页面的时候指定的
     this.postId = options.id;
     this.dbPost = new DBPost();
     var comments = this.dbPost.getCommentData(this.postId);
@@ -41,26 +49,27 @@ Page({
     })
   },
 
-
   // 获取用户输入
   bindCommentInput: function (event) {
     var val = event.detail.value;
     this.data.keyboardInputValue = val;
   },
 
-
   // 提交用户评论
   submitComment: function (event) {
     var imgs = this.data.chooseFiles;
     var newData = {
-      username: "青石",
-      avatar: "/images/avatar/avatar-3.png",
+      username: "欧克",
+      avatar: "/images/avatar/avatar-7.png",
       create_time: new Date().getTime() / 1000,
+      //评论内容：文本|图片
       content: {
         txt: this.data.keyboardInputValue,
         img: imgs
       },
     };
+
+    //如果没有输入内容，就不执行任何操作
     if (!newData.content.txt && imgs.length === 0) {
       return;
     }
@@ -111,8 +120,6 @@ Page({
     })
   },
 
-
-
   //选择本地照片与拍照
   chooseImage: function (event) {
     // 已选择图片数组
@@ -122,9 +129,10 @@ Page({
     if (leftCount <= 0) {
       return;
     }
+
     var sourceType = [event.currentTarget.dataset.category],
       that = this;
-    console.log(leftCount)
+
     wx.chooseImage({
       count: leftCount,
       sourceType: sourceType,
@@ -137,7 +145,6 @@ Page({
       }
     })
   },
-
 
   //删除已经选择的图片
   deleteImage: function (event) {
@@ -194,8 +201,8 @@ Page({
   //提交录音 
   submitVoiceComment: function (audio) {
     var newData = {
-      username: "青石",
-      avatar: "/images/avatar/avatar-3.png",
+      username: "里克",
+      avatar: "/images/avatar/avatar-6.png",
       create_time: new Date().getTime() / 1000,
       content: {
         txt: '',
