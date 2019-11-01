@@ -5,24 +5,8 @@ class DBPost{
     this.storageKeyName = 'postList';
   }
 
-  /*得到全部文章信息*/
-  getAllPostData() {
-    var res = wx.getStorageSync(this.storageKeyName);
-    if (!res) {
-      res = require('../data/defaultdata.js').postList;
-      this.execSetStorageSync(res);
-    }
-    return res;
-  }
-
-  //本地缓存，保存/更新
-  execSetStorageSync(data) {
-    wx.setStorageSync(this.storageKeyName, data)
-  }
-
   //获取指定id号的文章数据
   getPostItemById(id) {
-    this.cacheId = id;
     var postsData = this.getAllPostData();
     var len = postsData.length;
     for (var i = 0; i < len; i++) {
@@ -40,8 +24,8 @@ class DBPost{
 
     //将评论按时间降序排列
     itemData.comments.sort(this.compareWithTime);
-    var len = itemData.comments.length, comment;
-
+    var len = itemData.comments.length,
+            comment;
     for(var i=0; i< len;i++){
       //将comment中的时间戳转换成可阅读的格式
       comment=itemData.comments[i];
@@ -51,6 +35,31 @@ class DBPost{
     return itemData.comments;
   }
   
+  compareWithTime(val1, val2){
+    var flag = parseFloat(val1.create_time)-parseFloat(val2.create_time);
+    if( flag < 0){
+      return 1;
+    } else if (0 < flag){
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+
+  /*得到全部文章信息*/
+  getAllPostData() {
+    var res = wx.getStorageSync(this.storageKeyName);
+    if (!res) {
+      res = require('../data/defaultdata.js').postList;
+      this.execSetStorageSync(res);
+    }
+    return res;
+  }
+
+  //本地缓存，保存/更新
+  execSetStorageSync(data) {
+    wx.setStorageSync(this.storageKeyName, data)
+  }
   //收藏文章
   collect(id){
     return this.updatePostData(id,'collect');
@@ -58,19 +67,19 @@ class DBPost{
 
   //点赞或取消点赞
   up(id){
-    return this.updatePostData(id, 'up');
+    var data = this.updatePostData(id, 'up');
+    return data;
   }
 
-  newComment(id, newComment){
+  newComment(id,newComment){
     return this.updatePostData(id, 'comment', newComment);
   }
 
   //更新本地的点赞、评论信息、收藏、阅读量
-  updatePostData(id, category, newComment){
-    console.log("call updatePostData("+id+", "+category+", "+newComment+")");
-    var itemData = this.getPostItemById(id), postData = itemData.data, allPostData = this.getAllPostData();
-    console.log("itemData:" + itemData + " postData:" + postData + " allPostData:" + allPostData);
-
+  updatePostData(id, category, newComment) {
+    var itemData = this.getPostItemById(id),
+      postData = itemData.data,
+      allPostData = this.getAllPostData();
     switch (category){
       case 'collect':
         //处理收藏
@@ -106,17 +115,6 @@ class DBPost{
     this.execSetStorageSync(allPostData);
 
     return postData;
-  }
-
-  compareWithTime(val1, val2){
-    var flag = parseFloat(val1.create_time)-parseFloat(val2.create_time);
-    if( flag < 0){
-      return 1;
-    } else if (0 < flag){
-      return -1;
-    } else {
-      return 0;
-    }
   }
 };
 

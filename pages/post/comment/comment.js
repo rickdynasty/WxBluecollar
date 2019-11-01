@@ -2,28 +2,15 @@
 import { DBPost } from '../../../data/DBPost.js';
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    //控制：键盘输入 | 语音输入，初始为键盘输入
     useKeyboardFlag: true,
-    //控制：输入框内容，初始为空
     keyboardInputValue: '',
-    //控制：显示图片选择面板，初始为不显示
     sendMoreMsgFlag: false,
-    //选择的照片
     chooseFiles: [],
-    //删除的图片索引
     deleteIndex: -1,
+    currentAudio: ''
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-    // 注意这里的id变量是post.js启动detail页面的时候指定的
     this.postId = options.id;
     this.dbPost = new DBPost();
     var comments = this.dbPost.getCommentData(this.postId);
@@ -54,55 +41,68 @@ Page({
     })
   },
 
+
   // 获取用户输入
   bindCommentInput: function (event) {
     var val = event.detail.value;
     this.data.keyboardInputValue = val;
   },
 
+
+  // 提交用户评论
   submitComment: function (event) {
     var imgs = this.data.chooseFiles;
-
-    //如果没有输入内容，就不执行任何操作
-    if (!this.data.keyboardInputValue && imgs.length === 0) {
-      wx.showToast({
-        title: '请输入评论内容',
-        duration:800,
-        icon:'none'
-      })
+    var newData = {
+      username: "青石",
+      avatar: "/images/avatar/avatar-3.png",
+      create_time: new Date().getTime() / 1000,
+      content: {
+        txt: this.data.keyboardInputValue,
+        img: imgs
+      },
+    };
+    if (!newData.content.txt && imgs.length === 0) {
       return;
     }
+    //保存新评论到缓存数据库中
+    this.dbPost.newComment(this.postId, newData);
 
-    //构建一条评论：注意这里出评论内容其他都是硬编码方式
-    var newComment = {
-      username: "成领",
-      avatar: "/images/avatar/avatar-6.png",
-      create_time: new Date().getTime() / 1000,   //评论时间
-      //评论内容
-      content:{
-        txt: this.data.keyboardInputValue,
-      }
-    };
+    //显示操作结果
+    this.showCommitSuccessToast();
+    //重新渲染并绑定所有评论
+    this.bindCommentData();
+    //恢复初始状态
+    this.resetAllDefaultStatus();
+  },
 
-    //保存评论到数据库中,同时返回当前postData[评论只是post里面的一个属性]
-    this.dbPost.newComment(this.postId, newComment);
-    //显示结果
+  //评论成功
+  showCommitSuccessToast: function () {
+    //显示操作结果
     wx.showToast({
-      title: '评论成功',
-      duration:1000,
-      icon:"success",
+      title: "评论成功",
+      duration: 1000,
+      icon: "success"
     })
+  },
 
-    //从数据库中获取最新的评论内容，重新绑定数据刷新界面，同时充值输入状态
+  bindCommentData: function () {
     var comments = this.dbPost.getCommentData(this.postId);
     // 绑定评论数据
     this.setData({
-      comments: comments,
+      comments: comments
+    });
+  },
+
+  //将所有相关的按钮状态，输入状态都回到初始化状态
+  resetAllDefaultStatus: function () {
+    //清空评论框
+    this.setData({
       keyboardInputValue: '',
       chooseFiles: [],
       sendMoreMsgFlag: false
     });
   },
+
 
   //显示 选择照片、拍照等按钮
   sendMoreMsg: function () {
@@ -110,6 +110,8 @@ Page({
       sendMoreMsgFlag: !this.data.sendMoreMsgFlag
     })
   },
+
+
 
   //选择本地照片与拍照
   chooseImage: function (event) {
@@ -127,12 +129,15 @@ Page({
       count: leftCount,
       sourceType: sourceType,
       success: function (res) {
+        // 可以分次选择图片，但总数不能超过3张
+        console.log(res)
         that.setData({
           chooseFiles: imgArr.concat(res.tempFilePaths)
         });
       }
     })
   },
+
 
   //删除已经选择的图片
   deleteImage: function (event) {
@@ -200,7 +205,7 @@ Page({
     };
 
     //保存新评论到缓存数据库中
-    this.dbPost.newComment(newData);
+    this.dbPost.newComment(this.postId, newData);
 
     //显示操作结果
     this.showCommitSuccessToast();

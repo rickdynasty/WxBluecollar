@@ -121,7 +121,6 @@
     border-top:1rpx solid #D5D5D5;
     min-height: 100rpx;
     z-index: 1000;
-    font-size: 28rpx;
 }
 .input-box .send-msg-box{
     width: 100%;
@@ -150,7 +149,7 @@
     border-radius: 3px;
     line-height: 65rpx;
     margin:5rpx 0 5rpx 75rpx ;
-    font-size: 32rpx;
+    font-size: 24rpx;
     color: #838383;
     padding: 0 2%;
 }
@@ -188,6 +187,7 @@
     margin-top: 2px;
 }
 .input-box .submit-btn{
+    font-size: 24rpx;
     margin-top: 5rpx;
     margin-right: 8rpx;
     line-height: 60rpx;
