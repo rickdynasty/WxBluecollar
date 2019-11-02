@@ -12,8 +12,9 @@ var postList = [{
   detail: "冰棍与雪糕绝对不是同一个东西。3到5毛钱的雪糕犹如现在的哈根达斯，而5分1毛的 冰棍儿就像现在的老冰棒。时过境迁，当年的老冰棍也随着童年的记忆消失不见踪影。记得小时候，每当傍晚时分，总有一个老人推着一辆小车，小车的后架上放着一个大大的白色泡沫盒子。老人一边推着车，一边叫喊着：雪糕、冰棍...",
   postId: 1,
   music: {
-    url: "http://ws.stream.qqmusic.qq.com/C100001Dc80Z3qPj2Z.m4a?fromtag=38",
-    title: "罗大佑 恋曲1980",
+    url: "https://music.163.com/outchain/player?type=2&id=5257978&auto=1&height=66",
+	singer: "罗大佑",
+    title: "恋曲1980",
     coverImg: "http://y.gtimg.cn/music/photo_new/T002R150x150M000003cWU1M2qNwxZ.jpg?max_age=2592000",
   },
   collectionStatus: true,
@@ -35,8 +36,9 @@ var postList = [{
   detail: "小时候，家的后面有一条铁路。听说从南方北上的火车都必须经过这条铁路。火车大多在晚上经过，可呜呜的汽笛声，往往却被淹没在傍晚小院儿里散步的人群声中。只有在夜深人静的时候，火车的声音才能清晰的从远处飘过来。虽然日日听见火车的汽笛声，可说也奇怪，我竟从来不知道铁路在哪里。在每个夏日午后，我都会有一种去找寻找铁路的冲动，去看看这条铁路究竟是从哪里来，又将通向哪里去",
   postId: 2,
   music: {
-    url: "http://ws.stream.qqmusic.qq.com/C100004VybKS2SpZVL.m4a?fromtag=38",
-    title: "齐秦 原来的我",
+    url: "https://music.163.com/outchain/player?type=2&id=143196&auto=1&height=66",
+	singer: "齐秦",
+    title: "原来的我",
     coverImg: "http://y.gtimg.cn/music/photo_new/T002R150x150M000003ZvAeK2PgA4Y.jpg?max_age=2592000"
   },
   collectionStatus: true,
@@ -98,8 +100,9 @@ var postList = [{
   detail: "年少时，有几样东西，是春节里必不可少的：烟花、新衣、凉菜、压岁钱、饺子。年分大小年，有的地方是腊月二十三过小年，而有的地方是腊月二十四。童年的春节都是在小县城里度过，那时候的冬天还很冷，池塘的水会结冰，房屋上总是倒挂着一条条的冰棱，菜地里的白菜被厚厚的积雪覆盖着，只露出一小撮白绿相间的菜头，而茎部，竟然像是没有了一般...",
   postId: 3,
   music: {
-    url: "http://ws.stream.qqmusic.qq.com/C100003XYcCu3IZKLc.m4a?fromtag=38",
-    title: "老狼 虎口脱险",
+    url: "https://music.163.com/outchain/player?type=2&id=488707358&auto=1&height=66",
+	singer: "老狼",
+    title: "虎口脱险",
     coverImg: "http://y.gtimg.cn/music/photo_new/T002R150x150M000002sNbWp3royJG.jpg?max_age=2592000"
   },
   collectionStatus: false,
@@ -122,7 +125,8 @@ var postList = [{
   postId: 4,
   music: {
     url: "http://ws.stream.qqmusic.qq.com/C100003z8cOo0Bs7zP.m4a?fromtag=38",
-    title: "吴奇隆 祝你一路顺风",
+	singer: "吴奇隆",
+    title: "祝你一路顺风",
     coverImg: "http://y.gtimg.cn/music/photo_new/T002R150x150M000000n6a7p2HIPqU.jpg?max_age=2592000"
   },
   collectionStatus: false,
@@ -145,7 +149,8 @@ var postList = [{
   postId: 5,
   music: {
     url: "http://ws.stream.qqmusic.qq.com/C100004K7D5E2xhv9v.m4a?fromtag=38",
-    title: "杨千嬅 再见二丁目(live)",
+	singer: "杨千嬅",
+    title: "再见二丁目(live)",
     coverImg: "http://y.gtimg.cn/music/photo_new/T002R150x150M000000ptb8p0ZIxDP.jpg?max_age=2592000",
   },
   collectionStatus: false,

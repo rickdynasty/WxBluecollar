@@ -21,9 +21,9 @@ Page({
    */
   onLoad: function (options) {
     var dbPost = new DBPost();
-      this.setData({
-        postList: dbPost.getAllPostData()
-      })
+    this.setData({
+      postList: dbPost.getAllPostData()
+    })
   },
 
   onTapToDetail(event){
@@ -31,7 +31,7 @@ Page({
     console.log("onTapToDetail postId is "+postId);
 
     wx.navigateTo({
-      url: 'detail/detail?id='+postId,
+      url: "detail/detail?id=" + postId
     })
   },
 
@@ -42,6 +42,16 @@ Page({
     console.log("post page is onReady")
     wx.setNavigationBarTitle({
       title: '文章列表',
+    })
+  },
+
+  // target 和currentTarget
+  // target指的是当前点击的组件 和currentTarget 指的是事件捕获的组件
+  // target这里指的是image，而currentTarget指的是swiper
+  onSwiperTap: function (event) {
+    var postId = event.target.dataset.postId;
+    wx.navigateTo({
+      url: "detail/detail?id=" + postId
     })
   },
 

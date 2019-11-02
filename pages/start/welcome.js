@@ -19,7 +19,7 @@ Page({
     * 每种跳转都带有3个回调，如下：
     */
   onStartPost: function (event) {
-    wx.redirectTo({
+    wx.switchTab({
       url: '../post/post',
 
       success: function () {

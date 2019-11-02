@@ -1,4 +1,4 @@
-var util = require('../util/util.js')
+var util = require('../utils/util.js')
 
 class DBPost{
   constructor() {
@@ -71,8 +71,14 @@ class DBPost{
     return data;
   }
 
+  /*发表评论*/
   newComment(id,newComment){
     return this.updatePostData(id, 'comment', newComment);
+  }
+
+  //阅读数+1
+  addReadingTimes(id) {
+    this.updatePostData(id, 'reading');
   }
 
   //更新本地的点赞、评论信息、收藏、阅读量
@@ -106,6 +112,8 @@ class DBPost{
         postData.comments.push(newComment);
         postData.commentNum++;
         break;
+      case 'reading':
+        postData.readingNum++;
       default:
         break;
     }
